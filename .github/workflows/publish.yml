@@ -1,0 +1,48 @@
+name: "Publish"
+on: [release, workflow_dispatch]
+jobs:
+  build:
+    permissions:
+      contents: read
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v5
+      - name: Download Tweego
+        uses: robinraju/release-downloader@v1
+        with:
+          repository: tmedwards/tweego
+          latest: true
+          fileName: 'tweego-*-linux-x64.zip'
+          out-file-path: .tweego
+          extract: true
+      - name: Configure Tweego
+        run: |
+          chmod +x .tweego/tweego
+          ls -al .tweego
+      - name: Install Node.JS
+        uses: actions/setup-node@v6
+      - name: Run Build Script
+        run: bash build.sh
+        env:
+          TWEEGO_HOME: .tweego
+      - name: Copy Outputs
+        run: |
+          mkdir _site
+          if [ -d assets/ ]; then cp -r assets/ _site/; fi
+          cp nnt_homecoming.html _site/index.html
+      - name: Upload artifact
+        uses: actions/upload-pages-artifact@v4
+  deploy:
+    environment:
+      name: github-pages
+      url: ${{steps.deployment.outputs.page_url}}
+    permissions:
+      pages: write
+      id-token: write
+    runs-on: ubuntu-latest
+    needs: build
+    steps:
+      - name: Deploy to GitHub Pages
+        id: deployment
+        uses: actions/deploy-pages@v4

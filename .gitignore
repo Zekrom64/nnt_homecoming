@@ -1,3 +1,4 @@
+.tweego/
 .venv-*/
 .vscode/*
 !.vscode/launch.json

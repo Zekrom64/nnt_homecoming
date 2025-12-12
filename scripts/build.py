@@ -2,14 +2,17 @@ import os
 
 import build_api
 import build_twee
-import build_webpack
+import build_js
 import build_assets
 
 os.makedirs('build/js', exist_ok=True)
 
 tasks: list[build_api.Task] = []
 
-webpack = build_webpack.WebpackTask()
+npm = build_js.NPMTask()
+tasks.append(npm)
+
+webpack = build_js.WebpackTask()
 tasks.append(webpack)
 
 tweego = build_twee.TweegoTask("nnt_homecoming.html")

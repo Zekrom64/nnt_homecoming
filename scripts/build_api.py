@@ -92,8 +92,13 @@ class ProcessTask(OnlyOnChangeTask):
 		return None
 
 	def run_impl(self):
+		args = self.executable_args
+		# When executed as shell on Linux the args are not joined properly
+		if self.is_shell:
+			args = ' '.join(args)
+
 		proc = subprocess.run(
-			self.executable_args,
+			args,
 			stdout=self.stdout,
 			shell=self.is_shell
 		)
