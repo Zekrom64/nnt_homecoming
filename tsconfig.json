@@ -1,0 +1,11 @@
+{
+	"compilerOptions": {
+		"outDir": "build/js",
+		"noImplicitAny": true,
+		"module": "es2022",
+		"target": "es2020",
+		"jsx": "preserve",
+		"allowJs": true,
+		"moduleResolution": "node"
+	}
+}

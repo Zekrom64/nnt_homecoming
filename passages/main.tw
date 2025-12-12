@@ -1,0 +1,13 @@
+:: StoryData
+{
+	"ifid": "7988f9c8-8bd0-4467-9313-2da6737de850",
+	"format": "snowman",
+	"format-version": "2.0.2"
+}
+
+:: StoryTitle
+NNT Homecoming
+
+:: Start [start]
+
+- [[Start->Intro]]
